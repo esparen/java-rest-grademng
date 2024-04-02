@@ -9,7 +9,7 @@
 - <a href="https://www.linkedin.com/in/bruno-miguel-correa-17904829b/">Bruno Miguel Corrêa</a>
 - <a href="">Ederson Sparenberger</a>
 - <a href="">José André Fajardo Cerqueira</a>
-- <a href="">Felipe Longarai Trisotto></a>
+- <a href="">Felipe Longarai Trisotto</a>
 
 ## Objetivos
 
