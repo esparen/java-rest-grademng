@@ -12,10 +12,9 @@ public class DisciplinaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome_disciplina", nullable = false)
     private String nome;
 
-    @Column(name = "professor_id")
     @ManyToOne
+    @JoinColumn(name = "professor_id")
     private ProfessorEntity professorEntity;
 }
