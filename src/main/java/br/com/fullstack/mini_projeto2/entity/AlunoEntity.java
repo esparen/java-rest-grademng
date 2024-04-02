@@ -14,10 +14,8 @@ public class AlunoEntity
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome_aluno", nullable = false)
     private String nome;
 
-    @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
 
 }

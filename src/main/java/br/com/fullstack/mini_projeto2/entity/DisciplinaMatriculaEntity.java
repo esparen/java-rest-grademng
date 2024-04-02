@@ -15,17 +15,15 @@ public class DisciplinaMatriculaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "aluno_id", nullable = false)
     @ManyToOne
+    @JoinColumn(name = "aluno_id")
     private AlunoEntity alunoEntity;
 
-    @Column(name = "disciplina_id")
     @ManyToOne
+    @JoinColumn(name = "disciplina_id")
     private DisciplinaEntity disciplinaEntity;
 
-    @Column(name = "data_matricula", nullable = false)
     private LocalDate dataMatricula = LocalDate.now();
 
-    @Column(name = "media_final")
     private Double mediaFinal = 0.00;
 }

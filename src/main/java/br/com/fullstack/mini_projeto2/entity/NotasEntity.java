@@ -12,17 +12,15 @@ public class NotasEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "disciplina_matricula")
     @ManyToOne
+    @JoinColumn(name = "disciplina_id")
     private DisciplinaEntity disciplinaEntity;
 
-    @Column(name = "professor")
     @ManyToOne
+    @JoinColumn(name = "professor_id")
     private ProfessorEntity professorEntity;
 
-    @Column(name = "notas")
     private Double nota;
 
-    @Column(name = "coeficiente")
     private Double coeficiente_numerico;
 }
