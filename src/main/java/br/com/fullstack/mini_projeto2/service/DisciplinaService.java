@@ -1,56 +1,18 @@
 package br.com.fullstack.mini_projeto2.service;
 
 import br.com.fullstack.mini_projeto2.entity.DisciplinaEntity;
-import br.com.fullstack.mini_projeto2.repository.DisciplinaRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+public interface DisciplinaService {
 
-@Slf4j
-@Service
-@RequiredArgsConstructor
-public class DisciplinaService {
+    List<DisciplinaEntity> getAllDisciplinas();
 
-    private final DisciplinaRepository disciplinaRepository;
+    DisciplinaEntity getDisciplinaById(Long id) throws Exception;
 
-    public List<DisciplinaEntity> getAllDisciplinas(){
-        log.info("Listando todas as disciplinas");
-        return disciplinaRepository.findAll();
-    }
+    DisciplinaEntity createDisciplina(DisciplinaEntity disciplina) throws Exception;
 
-    public DisciplinaEntity getDisciplinaById(Long id) throws Exception {
-        Optional<DisciplinaEntity> disciplinaEntity = disciplinaRepository.findById(id);
-        return disciplinaEntity.orElseThrow(
-                ()-> new Exception(
-                        "Disciplina com id: " + id + " não encotrada!"
-                )
-        );
-    }
+    DisciplinaEntity updateDisciplina(Long id, DisciplinaEntity disciplina) throws Exception;
 
-    public DisciplinaEntity createDisciplina(DisciplinaEntity disciplinaEntity){
-        log.info("Criando disciplina");
-        return disciplinaRepository.save(disciplinaEntity);
-    }
+    void deleteDisciplina(Long id) throws Exception;
 
-    public DisciplinaEntity updateDisciplina(Long id, DisciplinaEntity disciplinaUpdated) throws Exception {
-        DisciplinaEntity disciplinaEntity = getDisciplinaById(id);
-
-        if (disciplinaEntity != null){
-            disciplinaEntity.setNome(disciplinaUpdated.getNome());
-        }
-
-        return disciplinaRepository.save(disciplinaEntity);
-    }
-
-    public void deleteDisciplina(Long id) throws Exception {
-        disciplinaRepository.findById(id).orElseThrow(
-                () -> new Exception(
-                        "Disciplina com id" + id + "não encontrada"
-                )
-        );
-        disciplinaRepository.deleteById(id);
-    }
 }
