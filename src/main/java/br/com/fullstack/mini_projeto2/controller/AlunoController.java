@@ -3,6 +3,7 @@ package br.com.fullstack.mini_projeto2.controller;
 import br.com.fullstack.mini_projeto2.entity.AlunoEntity;
 import br.com.fullstack.mini_projeto2.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +21,11 @@ public class AlunoController {
     }
 
     @GetMapping("/{id}")
-    public AlunoEntity getALunosById(@PathVariable Long id) throws Exception {
-        return alunoService.getAlunoById(id).getBody();
+    public ResponseEntity<AlunoEntity> getALunosById(@PathVariable Long id) throws Exception {
+        AlunoEntity alunoEntity = alunoService.getAlunoById(id);
+        return alunoEntity != null
+                ? ResponseEntity.ok(alunoEntity)
+                : ResponseEntity.notFound().build();
     }
 
     @PostMapping
@@ -30,12 +34,17 @@ public class AlunoController {
     }
 
     @PutMapping("/{id}")
-    public AlunoEntity updateAluno(@PathVariable Long id, @RequestBody AlunoEntity alunoEntity) throws Exception {
-        return alunoService.updateAluno(id, alunoEntity);
+    public ResponseEntity<AlunoEntity> updateAluno(@PathVariable Long id,
+                                                   @RequestBody AlunoEntity alunoChanges) throws Exception {
+        AlunoEntity alunoUpdated = alunoService.updateAluno(id, alunoChanges);
+        return alunoUpdated != null
+                ? ResponseEntity.ok(alunoUpdated)
+                : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAluno(@PathVariable Long id) throws Exception {
-        alunoService.deleteAlunoById(id);
+    public ResponseEntity<Void> deleteAluno(@PathVariable Long id) throws Exception {
+        alunoService.deleteAluno(id);
+        return ResponseEntity.ok().build();
     }
 }
