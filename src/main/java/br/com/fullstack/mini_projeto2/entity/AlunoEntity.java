@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @Entity
@@ -16,6 +17,7 @@ public class AlunoEntity
 
     private String nome;
 
-    private LocalDate dataNascimento;
+    @Temporal(TemporalType.DATE)
+    private Date dataNascimento;
 
 }

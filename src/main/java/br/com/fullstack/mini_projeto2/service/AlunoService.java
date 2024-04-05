@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlunoService {
@@ -24,12 +25,13 @@ public class AlunoService {
         return alunoRepository.findAll();
     }
 
-    public ResponseEntity<AlunoEntity> getAlunoById(Long id) throws Exception {
-        AlunoEntity alunoEntity = alunoRepository.findById(id).orElseThrow(
-                () -> new Exception(
-                        "Aluno com id " + id + " não encontrado"
-                ));
-        return ResponseEntity.ok(alunoEntity);
+    public AlunoEntity getAlunoById(Long id) throws Exception {
+        Optional<AlunoEntity> alunoEntity = alunoRepository.findById(id);
+        return alunoEntity.orElseThrow(
+                ()-> new Exception(
+                        "Aluno com id: " + id + " não encotrado!"
+                )
+        );
     }
 
     public AlunoEntity createAluno(AlunoEntity alunoEntity){
@@ -37,16 +39,18 @@ public class AlunoService {
         return alunoRepository.save(alunoEntity);
     }
 
-    public AlunoEntity updateAluno(Long id, AlunoEntity alunoEntity) throws Exception {
-        alunoRepository.findById(id).orElseThrow(
-                () -> new Exception(
-                        "Aluno com id " + id + " não encontrado"
-                )
-        );
+    public AlunoEntity updateAluno(Long id, AlunoEntity alunoUpdated) throws Exception {
+        AlunoEntity alunoEntity = getAlunoById(id);
+
+        if (alunoEntity != null){
+            alunoEntity.setNome(alunoUpdated.getNome());
+            alunoEntity.setDataNascimento(alunoUpdated.getDataNascimento());
+        }
+
         return alunoRepository.save(alunoEntity);
     }
 
-    public void deleteAlunoById(Long id) throws Exception {
+    public void deleteAluno(Long id) throws Exception {
         alunoRepository.findById(id).orElseThrow(
                 () -> new Exception(
                         "Aluno com id" + id + "não encontrado"
