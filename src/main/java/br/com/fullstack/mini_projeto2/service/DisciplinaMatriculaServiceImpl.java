@@ -33,12 +33,9 @@ public class DisciplinaMatriculaServiceImpl implements DisciplinaMatriculaServic
         return newMatricula;
     }
 
-    //    DELETE:
-    //    Deve receber apelas o id no PathVariable;
-    //    Validar se existe notas já lançadas:
-    //    Caso exista, informar a falha ao cliente;
-    //    Caso NÃO exista, deve excluir a matrícula.
-
+    public void deleteMatricula(Long matriculaId) throws Exception {
+        disciplinaMatriculaRepository.deleteById(matriculaId);
+    }
     public DisciplinaMatriculaEntity getMatriculaById(Long id) throws Exception {
         Optional<DisciplinaMatriculaEntity> targetMatricula = disciplinaMatriculaRepository.findById(id);
         return targetMatricula.orElse(null);

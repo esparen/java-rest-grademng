@@ -2,7 +2,9 @@ package br.com.fullstack.mini_projeto2.controller;
 
 
 import br.com.fullstack.mini_projeto2.entity.DisciplinaMatriculaEntity;
+import br.com.fullstack.mini_projeto2.entity.NotasEntity;
 import br.com.fullstack.mini_projeto2.service.DisciplinaMatriculaServiceImpl;
+import br.com.fullstack.mini_projeto2.service.NotasServiceImpl;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,7 @@ import java.util.List;
 @RequestMapping("/matricula")
 public class DisciplinaMatriculaController {
     private final DisciplinaMatriculaServiceImpl disciplinaMatriculaServiceImpl;
+    private final NotasServiceImpl notasServiceImpl;
     @Data
     public static class MatriculaRequest {
         private final Long idAluno;
@@ -76,6 +79,24 @@ public class DisciplinaMatriculaController {
             }
             return ResponseEntity.ok(matriculasDisciplina);
 
+        } catch(Exception e)  {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{matriculaId}")
+    public ResponseEntity deleteMatriculaByMatriculaId(@PathVariable Long matriculaId) {
+        try {
+            log.info("DELETE /matricula");
+            DisciplinaMatriculaEntity matricula = disciplinaMatriculaServiceImpl.getMatriculaById(matriculaId);
+            if (matricula == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Matricula ["+ matriculaId+"] não encontrada");
+
+            List<NotasEntity> notasMatricula = notasServiceImpl.getNotasByDisciplinaMatriculaId(matriculaId);
+            if (notasMatricula == null || notasMatricula.isEmpty()) {
+                disciplinaMatriculaServiceImpl.deleteMatricula(matriculaId);
+                return ResponseEntity.noContent().build();
+            } else
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Impossível remover , a matricula [" + matriculaId + "], possui notas lançadas");
         } catch(Exception e)  {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
