@@ -1,6 +1,5 @@
 package br.com.fullstack.mini_projeto2.service;
 
-import br.com.fullstack.mini_projeto2.entity.DisciplinaEntity;
 import br.com.fullstack.mini_projeto2.entity.DisciplinaMatriculaEntity;
 
 import java.util.List;
@@ -15,5 +14,5 @@ public interface DisciplinaMatriculaService {
 
     List<DisciplinaMatriculaEntity> getMatriculaByAlunoId(Long alunoId) throws Exception;
 
-    //DisciplinaMatriculaEntity getMatriculaByDisciplinaId(Long id) throws Exception;
+    List<DisciplinaMatriculaEntity> getMatriculaByDisciplinaId(Long disciplinaId) throws Exception;
 }

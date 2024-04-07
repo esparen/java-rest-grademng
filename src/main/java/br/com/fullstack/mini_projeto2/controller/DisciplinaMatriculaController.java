@@ -19,7 +19,7 @@ import java.util.List;
 public class DisciplinaMatriculaController {
     private final DisciplinaMatriculaServiceImpl disciplinaMatriculaServiceImpl;
     @Data
-    private static class MatriculaRequest {
+    public static class MatriculaRequest {
         private final Long idAluno;
         private final Long idDisciplina;
     }
@@ -60,6 +60,21 @@ public class DisciplinaMatriculaController {
                 return ResponseEntity.notFound().build();
             }
             return ResponseEntity.ok(matriculasAluno);
+
+        } catch(Exception e)  {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/bydisciplina/{disciplinaId}")
+    public ResponseEntity getMatriculaByDisciplinaId(@PathVariable Long disciplinaId) {
+        try {
+            log.info("GET /matricula/bydisciplina");
+            List<DisciplinaMatriculaEntity> matriculasDisciplina = disciplinaMatriculaServiceImpl.getMatriculaByDisciplinaId(disciplinaId);
+            if (matriculasDisciplina.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(matriculasDisciplina);
 
         } catch(Exception e)  {
             return ResponseEntity.badRequest().body(e.getMessage());

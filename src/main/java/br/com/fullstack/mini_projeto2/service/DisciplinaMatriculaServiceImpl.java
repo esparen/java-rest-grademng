@@ -43,14 +43,12 @@ public class DisciplinaMatriculaServiceImpl implements DisciplinaMatriculaServic
         Optional<DisciplinaMatriculaEntity> targetMatricula = disciplinaMatriculaRepository.findById(id);
         return targetMatricula.orElse(null);
     }
-    //    GET Por aluno**:**
-    //    Deve receber apelas o id de aluno no PathVariable;
-    //    Retornar todas as matrículas pertencentes à um aluno.
     public List<DisciplinaMatriculaEntity> getMatriculaByAlunoId(Long alunoId) throws Exception {
         List<DisciplinaMatriculaEntity> matriculasAluno = disciplinaMatriculaRepository.findByAlunoId(alunoId);
         return matriculasAluno;
     }
-    //    GET Por disciplina**:**
-    //    Deve receber apelas o id da matrícula no PathVariable
-    //    Retornar todas as matrículas pertencentes à uma disciplina
+    public List<DisciplinaMatriculaEntity> getMatriculaByDisciplinaId(Long disciplinaId) throws Exception {
+        List<DisciplinaMatriculaEntity> matriculasDisciplina = disciplinaMatriculaRepository.findByDisciplinaId(disciplinaId);
+        return matriculasDisciplina;
+    }
 }
