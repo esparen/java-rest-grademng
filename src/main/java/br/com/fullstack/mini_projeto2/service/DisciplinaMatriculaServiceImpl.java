@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -37,10 +39,10 @@ public class DisciplinaMatriculaServiceImpl implements DisciplinaMatriculaServic
     //    Caso exista, informar a falha ao cliente;
     //    Caso NÃO exista, deve excluir a matrícula.
 
-    //    GET Por ID**:**
-    //    Deve receber apelas o id no PathVariable;
-    //    Retornar uma matrícula que tenha o ID informado.
-
+    public DisciplinaMatriculaEntity getMatriculaById(Long id) throws Exception {
+        Optional<DisciplinaMatriculaEntity> targetMatricula = disciplinaMatriculaRepository.findById(id);
+        return targetMatricula.orElse(null);
+    }
     //    GET Por aluno**:**
     //    Deve receber apelas o id de aluno no PathVariable;
     //    Retornar todas as matrículas pertencentes à um aluno.

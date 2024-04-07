@@ -30,6 +30,22 @@ public class DisciplinaMatriculaController {
         } catch(Exception e)  {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
 
+    @GetMapping("/bymatricula/{matriculaId}")
+    public ResponseEntity getMatriculaByMatriculaId(@PathVariable Long matriculaId) {
+        try {
+            log.info("GET /matricula/bymatricula");
+            DisciplinaMatriculaEntity matricula = disciplinaMatriculaServiceImpl.getMatriculaById(matriculaId);
+            if (matricula == null) {
+                log.info("GET /matricula/bymatricula -> 400 BAD_REQUEST");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Nenhuma matricula com id ["+ matriculaId +"] encontrada");
+            } else {
+                log.info("GET /matricula/bymatricula -> 200 OK");
+                return ResponseEntity.status(HttpStatus.OK).body(matricula);
+            }
+        } catch(Exception e)  {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

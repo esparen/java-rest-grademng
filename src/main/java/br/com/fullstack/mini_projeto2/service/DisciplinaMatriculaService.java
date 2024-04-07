@@ -8,7 +8,7 @@ public interface DisciplinaMatriculaService {
 
     //void deleteMatricula(Long id) throws Exception;
 
-    //DisciplinaMatriculaEntity getMatriculaById(Long id) throws Exception;
+    DisciplinaMatriculaEntity getMatriculaById(Long id) throws Exception;
 
     //DisciplinaMatriculaEntity getMatriculaByAlunoId(Long id) throws Exception;
 
