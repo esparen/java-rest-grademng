@@ -2,7 +2,6 @@ package br.com.fullstack.mini_projeto2.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
@@ -17,11 +16,11 @@ public class DisciplinaMatriculaEntity {
 
     @ManyToOne
     @JoinColumn(name = "aluno_id")
-    private AlunoEntity alunoEntity;
+    private AlunoEntity aluno;
 
     @ManyToOne
     @JoinColumn(name = "disciplina_id")
-    private DisciplinaEntity disciplinaEntity;
+    private DisciplinaEntity disciplina;
 
     private LocalDate dataMatricula = LocalDate.now();
 

@@ -3,12 +3,12 @@ package br.com.fullstack.mini_projeto2.service;
 import br.com.fullstack.mini_projeto2.entity.AlunoEntity;
 import br.com.fullstack.mini_projeto2.entity.DisciplinaEntity;
 import br.com.fullstack.mini_projeto2.entity.DisciplinaMatriculaEntity;
-import br.com.fullstack.mini_projeto2.service.AlunoService;
 import br.com.fullstack.mini_projeto2.repository.DisciplinaMatriculaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -27,8 +27,8 @@ public class DisciplinaMatriculaServiceImpl implements DisciplinaMatriculaServic
         if (targetDisciplina == null) throw new Exception("Disciplina id [" + idDisciplina + "] não encontrada");
 
         DisciplinaMatriculaEntity newMatricula = new DisciplinaMatriculaEntity();
-        newMatricula.setDisciplinaEntity(targetDisciplina);
-        newMatricula.setAlunoEntity(targetAluno);
+        newMatricula.setDisciplina(targetDisciplina);
+        newMatricula.setAluno(targetAluno);
         disciplinaMatriculaRepository.save(newMatricula);
         return newMatricula;
     }
@@ -46,7 +46,10 @@ public class DisciplinaMatriculaServiceImpl implements DisciplinaMatriculaServic
     //    GET Por aluno**:**
     //    Deve receber apelas o id de aluno no PathVariable;
     //    Retornar todas as matrículas pertencentes à um aluno.
-
+    public List<DisciplinaMatriculaEntity> getMatriculaByAlunoId(Long alunoId) throws Exception {
+        List<DisciplinaMatriculaEntity> matriculasAluno = disciplinaMatriculaRepository.findByAlunoId(alunoId);
+        return matriculasAluno;
+    }
     //    GET Por disciplina**:**
     //    Deve receber apelas o id da matrícula no PathVariable
     //    Retornar todas as matrículas pertencentes à uma disciplina

@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -46,6 +48,21 @@ public class DisciplinaMatriculaController {
             }
         } catch(Exception e)  {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/byaluno/{alunoId}")
+    public ResponseEntity getMatriculaByAlunoId(@PathVariable Long alunoId) {
+        try {
+            log.info("GET /matricula/byaluno");
+            List<DisciplinaMatriculaEntity> matriculasAluno = disciplinaMatriculaServiceImpl.getMatriculaByAlunoId(alunoId);
+            if (matriculasAluno.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(matriculasAluno);
+
+        } catch(Exception e)  {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

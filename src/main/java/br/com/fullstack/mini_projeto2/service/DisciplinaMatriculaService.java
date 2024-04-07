@@ -2,6 +2,9 @@ package br.com.fullstack.mini_projeto2.service;
 
 import br.com.fullstack.mini_projeto2.entity.DisciplinaEntity;
 import br.com.fullstack.mini_projeto2.entity.DisciplinaMatriculaEntity;
+
+import java.util.List;
+
 public interface DisciplinaMatriculaService {
 
     DisciplinaMatriculaEntity createDisciplinaMatricula(Long idAluno, Long idDisciplina) throws Exception;
@@ -10,7 +13,7 @@ public interface DisciplinaMatriculaService {
 
     DisciplinaMatriculaEntity getMatriculaById(Long id) throws Exception;
 
-    //DisciplinaMatriculaEntity getMatriculaByAlunoId(Long id) throws Exception;
+    List<DisciplinaMatriculaEntity> getMatriculaByAlunoId(Long alunoId) throws Exception;
 
     //DisciplinaMatriculaEntity getMatriculaByDisciplinaId(Long id) throws Exception;
 }
