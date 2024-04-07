@@ -13,8 +13,8 @@ public class NotasEntity {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "disciplina_id")
-    private DisciplinaEntity disciplinaEntity;
+    @JoinColumn(name = "disciplina_matricula_id")
+    private DisciplinaMatriculaEntity disciplinaMatricula;
 
     @ManyToOne
     @JoinColumn(name = "professor_id")
@@ -22,5 +22,5 @@ public class NotasEntity {
 
     private Double nota;
 
-    private Double coeficiente_numerico;
+    private Double coeficiente;
 }

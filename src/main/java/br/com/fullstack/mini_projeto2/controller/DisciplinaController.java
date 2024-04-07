@@ -42,7 +42,7 @@ public class DisciplinaController {
         DisciplinaEntity disciplina = disciplinaServiceImpl.createDisciplina(disciplinaEntity);
         log.info("POST /disciplinas -> Cadastrada");
         log.info("POST /disciplinas -> 201 CREATED");
-        return disciplinaServiceImpl.createDisciplina(disciplinaEntity);
+        return disciplina;
     }
 
     @PutMapping("/{id}")
