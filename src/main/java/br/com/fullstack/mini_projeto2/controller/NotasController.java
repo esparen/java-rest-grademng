@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -31,6 +32,20 @@ public class NotasController {
             if (matriculaId == null) throw new IllegalArgumentException("matriculaId não pode ser null nem vazio");
             if (nota == null) throw new IllegalArgumentException("nota não pode ser null nem vazio");
             if (coeficiente == null) throw new IllegalArgumentException("corficiente não pode ser null nem vazio");
+        }
+    }
+    @GetMapping("/bymatricula/{matriculaId}")
+    public ResponseEntity getNotasByMatricula(@PathVariable Long matriculaId) {
+        try {
+            log.info("GET /notas/bymatricula");
+            List<NotasEntity> matriculasDisciplina = notasService.getNotasByDisciplinaMatriculaId(matriculaId);
+            if (matriculasDisciplina.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(matriculasDisciplina);
+
+        } catch(Exception e)  {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
     @PostMapping
