@@ -3,6 +3,7 @@ package br.com.fullstack.mini_projeto2.service;
 import br.com.fullstack.mini_projeto2.entity.AlunoEntity;
 import br.com.fullstack.mini_projeto2.entity.DisciplinaEntity;
 import br.com.fullstack.mini_projeto2.entity.DisciplinaMatriculaEntity;
+import br.com.fullstack.mini_projeto2.repository.AlunoRepository;
 import br.com.fullstack.mini_projeto2.repository.DisciplinaMatriculaRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,10 +18,11 @@ import java.util.Optional;
 public class DisciplinaMatriculaServiceImpl implements DisciplinaMatriculaService{
 
     private final DisciplinaMatriculaRepository disciplinaMatriculaRepository;
-    private final AlunoService alunoService;
     private final DisciplinaService disciplinaService;
+    private final AlunoRepository alunoRepository;
+
     public DisciplinaMatriculaEntity createDisciplinaMatricula(Long idAluno, Long idDisciplina) throws Exception {
-        AlunoEntity targetAluno = alunoService.getAlunoById(idAluno);
+        AlunoEntity targetAluno = alunoRepository.findById(idAluno).orElse(null);
         if (targetAluno == null) throw new Exception("Aluno id [" + idAluno + "] não encontrado");
 
         DisciplinaEntity targetDisciplina = disciplinaService.getDisciplinaById(idDisciplina);
