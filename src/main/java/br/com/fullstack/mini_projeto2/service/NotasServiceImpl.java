@@ -3,6 +3,7 @@ package br.com.fullstack.mini_projeto2.service;
 import br.com.fullstack.mini_projeto2.entity.DisciplinaEntity;
 import br.com.fullstack.mini_projeto2.entity.DisciplinaMatriculaEntity;
 import br.com.fullstack.mini_projeto2.entity.NotasEntity;
+import br.com.fullstack.mini_projeto2.repository.DisciplinaMatriculaRepository;
 import br.com.fullstack.mini_projeto2.repository.DisciplinaRepository;
 import br.com.fullstack.mini_projeto2.repository.NotasRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class NotasServiceImpl implements NotasService {
     private final NotasRepository notasRepository;
     private final DisciplinaRepository disciplinaRepository;
+    private final DisciplinaMatriculaRepository disciplinaMatriculaRepository;
 
     public List<NotasEntity> getNotasByDisciplinaMatriculaId(Long matriculaId) throws Exception {
         List<NotasEntity> notasMatricula = notasRepository.findByDisciplinaMatriculaId(matriculaId);
@@ -31,11 +33,24 @@ public class NotasServiceImpl implements NotasService {
         NotasEntity newNota = new NotasEntity();
         newNota.setNota(nota);
         newNota.setCoeficiente(coeficiente);
+        newNota.setDisciplinaMatricula(matricula);
         newNota.setProfessorEntity(targetDisciplina.getProfessorEntity());
+        notasRepository.save(newNota);
+        this.updateMediaGeral(matricula);
         return newNota;
     }
 
     private DisciplinaMatriculaEntity updateMediaGeral(@NonNull DisciplinaMatriculaEntity matricula) throws Exception{
-        return null;
+        try {
+            List<NotasEntity> notas = this.getNotasByDisciplinaMatriculaId(matricula.getId());
+            Double sumWeightedGrades = notas.stream()
+                    .mapToDouble(nota -> nota.getNota() * nota.getCoeficiente())
+                    .sum();
+            matricula.setMediaFinal(sumWeightedGrades);
+            matricula = disciplinaMatriculaRepository.save(matricula);
+            return matricula;
+        } catch(Exception e) {
+            throw new Exception("Erro ao atualizar mégia geral da matricula ["+ matricula.getId()+"]. Mensagem:" + e.getMessage());
+        }
     }
 }

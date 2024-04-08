@@ -3,7 +3,6 @@ package br.com.fullstack.mini_projeto2.controller;
 import br.com.fullstack.mini_projeto2.entity.DisciplinaMatriculaEntity;
 import br.com.fullstack.mini_projeto2.entity.NotasEntity;
 import br.com.fullstack.mini_projeto2.service.DisciplinaMatriculaServiceImpl;
-import br.com.fullstack.mini_projeto2.service.DisciplinaServiceImpl;
 import br.com.fullstack.mini_projeto2.service.NotasServiceImpl;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +26,12 @@ public class NotasController {
     public static class NewNotaRequest{
         private final Long matriculaId;
         private final Double nota;
-        private final Double corficiente;
+        private final Double coeficiente;
 
         public void validateRequest() throws Exception{
             if (matriculaId == null) throw new IllegalArgumentException("matriculaId não pode ser null nem vazio");
             if (nota == null) throw new IllegalArgumentException("nota não pode ser null nem vazio");
-            if (corficiente == null) throw new IllegalArgumentException("corficiente não pode ser null nem vazio");
+            if (coeficiente == null) throw new IllegalArgumentException("corficiente não pode ser null nem vazio");
         }
     }
     @PostMapping
@@ -41,7 +40,7 @@ public class NotasController {
             log.info("POST /notas");
             notaRequest.validateRequest();
             DisciplinaMatriculaEntity targetMatricula = disciplinaMatriculaService.getMatriculaById(notaRequest.getMatriculaId());
-            NotasEntity newNota = notasService.addNota(targetMatricula, notaRequest.getNota(), notaRequest.getCorficiente());
+            NotasEntity newNota = notasService.addNota(targetMatricula, notaRequest.getNota(), notaRequest.getCoeficiente());
             log.info("POST /notas -> 201 CREATED");
             return ResponseEntity.status(HttpStatus.CREATED).body(newNota);
         }
