@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface NotasService {
 
+    NotasEntity getNotaById(Long matriculaId) throws Exception;
+
     List<NotasEntity> getNotasByDisciplinaMatriculaId(Long matriculaId) throws Exception;
 
     NotasEntity addNota(@NonNull DisciplinaMatriculaEntity matricula, @NonNull Double nota, @NonNull Double coeficiente) throws Exception;
@@ -15,5 +17,7 @@ public interface NotasService {
     private DisciplinaMatriculaEntity updateMediaGeral(@NonNull DisciplinaMatriculaEntity matricula) throws Exception {
         return null;
     }
+
+    void deleteNota(NotasEntity nota) throws Exception;
 
 }

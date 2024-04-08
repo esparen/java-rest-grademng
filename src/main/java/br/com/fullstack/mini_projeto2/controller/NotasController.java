@@ -9,10 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @Slf4j
 @RestController
@@ -46,6 +45,22 @@ public class NotasController {
         }
         catch(Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{notaId}")
+    public ResponseEntity deleteNota(@PathVariable Long notaId) throws Exception {
+        log.info("DELETE /notas");
+        try {
+            NotasEntity targetNota = notasService.getNotaById(notaId);
+            if (Objects.isNull(targetNota))
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Impossivel excluir, Nota com id [" + notaId + "] não encontrada");
+            else {
+                notasService.deleteNota(targetNota);
+                return ResponseEntity.noContent().build();
+            }
+        } catch(Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

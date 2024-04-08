@@ -22,6 +22,9 @@ public class NotasServiceImpl implements NotasService {
     private final DisciplinaRepository disciplinaRepository;
     private final DisciplinaMatriculaRepository disciplinaMatriculaRepository;
 
+    public NotasEntity getNotaById(Long matriculaId) {
+        return notasRepository.findById(matriculaId).orElse(null);
+    };
     public List<NotasEntity> getNotasByDisciplinaMatriculaId(Long matriculaId) throws Exception {
         List<NotasEntity> notasMatricula = notasRepository.findByDisciplinaMatriculaId(matriculaId);
         return notasMatricula;
@@ -52,5 +55,10 @@ public class NotasServiceImpl implements NotasService {
         } catch(Exception e) {
             throw new Exception("Erro ao atualizar mégia geral da matricula ["+ matricula.getId()+"]. Mensagem:" + e.getMessage());
         }
+    }
+
+    public void deleteNota(NotasEntity nota) throws Exception {
+        notasRepository.delete(nota);
+        this.updateMediaGeral(nota.getDisciplinaMatricula());
     }
 }
