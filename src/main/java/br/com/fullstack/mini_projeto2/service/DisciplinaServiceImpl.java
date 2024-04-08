@@ -44,6 +44,7 @@ public class DisciplinaServiceImpl implements DisciplinaService{
         return disciplinaRepository.save(disciplinaEntity);
     }
 
+    //TODO: método DELETE deve retornar um Response entity ou HTTP status
     public void deleteDisciplina(Long id) throws Exception {
         disciplinaRepository.findById(id).orElseThrow(
                 () -> new Exception(
