@@ -2,18 +2,30 @@ package br.com.fullstack.mini_projeto2.controller;
 
 import br.com.fullstack.mini_projeto2.entity.AlunoEntity;
 import br.com.fullstack.mini_projeto2.service.AlunoService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/alunos")
 public class AlunoController {
 
-    @Autowired
     private AlunoService alunoService;
+
+    @Autowired
+    public void setAlunoService(AlunoService alunoService) {
+        this.alunoService = alunoService;
+    }
+
+    @Data
+    public static class AlunoMediasGerais {
+        private final Double mediaGeral;
+        private final ArrayList<String> mediaFinalDisciplina;
+    }
 
     @GetMapping
     public List<AlunoEntity> getAllAlunos(){
@@ -26,6 +38,16 @@ public class AlunoController {
         return alunoEntity != null
                 ? ResponseEntity.ok(alunoEntity)
                 : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{alunoId}/mediageral")
+    public ResponseEntity getAlunoMediaGeral(@PathVariable Long alunoId) throws Exception {
+        try {
+            AlunoMediasGerais alunoMediasGerais = alunoService.getAlunoMediaGeral(alunoId);
+            return ResponseEntity.ok(alunoMediasGerais);
+        } catch(Exception e)  {
+            return ResponseEntity.internalServerError().body("Erro ao calcular a média geral do aluno:" + e.getMessage());
+        }
     }
 
     @PostMapping
