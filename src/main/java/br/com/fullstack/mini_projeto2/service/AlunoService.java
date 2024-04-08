@@ -20,7 +20,7 @@ public class AlunoService {
     @Autowired
     private AlunoRepository alunoRepository;
 
-    public List<AlunoEntity> getAllAlunos(){
+    public List<AlunoEntity> getAllAlunos() {
         logger.info("Listando todos os alunos");
         return alunoRepository.findAll();
     }
@@ -28,13 +28,13 @@ public class AlunoService {
     public AlunoEntity getAlunoById(Long id) throws Exception {
         Optional<AlunoEntity> alunoEntity = alunoRepository.findById(id);
         return alunoEntity.orElseThrow(
-                ()-> new Exception(
+                () -> new Exception(
                         "Aluno com id: " + id + " não encotrado!"
                 )
         );
     }
 
-    public AlunoEntity createAluno(AlunoEntity alunoEntity){
+    public AlunoEntity createAluno(AlunoEntity alunoEntity) {
         logger.info("Criando aluno");
         return alunoRepository.save(alunoEntity);
     }
@@ -42,7 +42,7 @@ public class AlunoService {
     public AlunoEntity updateAluno(Long id, AlunoEntity alunoUpdated) throws Exception {
         AlunoEntity alunoEntity = getAlunoById(id);
 
-        if (alunoEntity != null){
+        if (alunoEntity != null) {
             alunoEntity.setNome(alunoUpdated.getNome());
             alunoEntity.setDataNascimento(alunoUpdated.getDataNascimento());
         }
