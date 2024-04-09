@@ -10,6 +10,7 @@
 - <a href="">Ederson Sparenberger</a>
 - <a href="">José André Fajardo Cerqueira</a>
 - <a href="">Felipe Longarai Trisotto</a>
+- <a href="">Gabriel Da Silva Ferreira</a>
 
 ## Objetivos
 
