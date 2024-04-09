@@ -11,41 +11,33 @@ import java.util.Optional;
 @Service
 public class ProfessorService {
 
-    @Autowired
-    private ProfessorRepository professorRepository;
+    private final ProfessorRepository professorRepository;
 
-    public List<ProfessorEntity> getAllProfessores(){
+    @Autowired
+    public ProfessorService(ProfessorRepository professorRepository) {
+        this.professorRepository = professorRepository;
+    }
+
+    public List<ProfessorEntity> getAllProfessores() {
         return professorRepository.findAll();
     }
 
     public ProfessorEntity getProfessorById(Long id) throws Exception {
-        Optional<ProfessorEntity> professorEntity = professorRepository.findById(id);
-        return professorEntity.orElseThrow(
-                ()-> new Exception(
-                        "Professor com id " + id + " não encontrado."
-                )
-        );
+        return professorRepository.findById(id)
+                .orElseThrow(() -> new Exception("Professor com id " + id + " não encontrado."));
     }
 
-    public ProfessorEntity createProfessor(ProfessorEntity professorEntity){
+    public ProfessorEntity createProfessor(ProfessorEntity professorEntity) {
         return professorRepository.save(professorEntity);
     }
 
     public ProfessorEntity updateProfessor(long id, ProfessorEntity professorUpdated) throws Exception {
         ProfessorEntity professorEntity = getProfessorById(id);
-
-        if (professorEntity != null){
-            professorEntity.setNome(professorUpdated.getNome());
-        }
-
+        professorEntity.setNome(professorUpdated.getNome());
         return professorRepository.save(professorEntity);
     }
 
     public void deleteProfessor(long id) throws Exception {
-        professorRepository.findById(id).orElseThrow(
-                ()-> new Exception(
-                        "Professor com id " + id + " não encontrado."
-                )
-        );
+        professorRepository.deleteById(id);
     }
 }
